@@ -18,9 +18,9 @@ data$Latitude <- as.numeric(data$Latitude)
 data_sp <- SpatialPointsDataFrame(data[,c(6, 7)], 
                                   data[,-c(6, 7)])
 
-seattle_map <- leaflet(seattle_boundaries) %>% 
+seattle_map <- leaflet() %>% 
                addTiles() %>% 
-               addPolygons() %>% 
+          
                addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
                           popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
                                          "<br>", "Date: ",  Date, sep = " ")) %>% 

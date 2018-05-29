@@ -24,6 +24,7 @@ data_sp <- SpatialPointsDataFrame(data[,c(6, 7)],
                                   data[,-c(6, 7)])
 
 output$seattle_map <- renderLeaflet({
+
                seattle_map<- leaflet() %>% 
                addTiles() %>% 
           
@@ -33,6 +34,7 @@ output$seattle_map <- renderLeaflet({
                           clusterOptions = markerClusterOptions()) %>% 
                setView(lng = -122.335167, lat = 47.608013, zoom = 11,
                        options = NULL)
+
 })
 
 }

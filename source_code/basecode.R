@@ -89,3 +89,54 @@ new_york_non_fatal_by_year_non_White <- group_by(new_officer_shooting_data_new_y
 # for new york, compute non-fatal shootings per year where the target was white
 new_york_non_fatal_by_year_White <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("No", Fatal) & SubjectRace == "White") %>%
   summarize(NumberShootings = n())
+
+
+###########Modifications for Fatal and Armed data#################
+# for seattle, find the number of fatal shootings per year
+seattle_fatal_by_year <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("Yes", Fatal)) %>%
+  summarize(NumberFatalShootings = n())
+
+# for seattle, find non-fatal shooting counts by year
+seattle_non_fatal_by_year <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("No", Fatal)) %>%
+  summarize(NumberShootings = n())
+
+# for seattle, compute fatal shootings per year where the target was unarmed
+seattle_fatal_by_year_non_armed <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("Yes", Fatal) & grepl("No", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for seattle, compute fatal shootings per year where the target was armed
+seattle_fatal_by_year_armed <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("Yes", Fatal) & grepl("Yes", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for seattle, compute non-fatal shootings per year where the target was unarmed
+seattle_non_fatal_by_year_non_armed <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("No", Fatal) & grepl("No", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for seattle, compute non-fatal shootings per year where the target was armed
+seattle_non_fatal_by_year_armed <- group_by(new_officer_shooting_data_seattle_renamed, Date) %>% filter(grepl("No", Fatal) & grepl("Yes", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for new york, find the number of fatal shootings per year
+new_york_fatal_by_year <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("Yes", Fatal)) %>%
+  summarize(NumberFatalShootings = n())
+
+# for new york, find the number of non-fatal shootings per year
+new_york_non_fatal_by_year <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("No", Fatal)) %>%
+  summarize(NumberNonFatalShootings = n())
+
+# for new york, compute fatal shootings per year where the target was unarmed
+new_york_fatal_by_year_non_armed <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("Yes", Fatal) & grepl("No", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for new york, compute fatal shootings per year where the target was armed
+new_york_fatal_by_year_armed <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("Yes", Fatal) & grepl("Yes", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for new york, compute non-fatal shootings per year where the target was unarmed
+new_york_non_fatal_by_year_non_armed <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("No", Fatal) & grepl("No", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+
+# for new york, compute non-fatal shootings per year where the target was armed
+new_york_non_fatal_by_year_armed <- group_by(new_officer_shooting_data_new_york, Date) %>% filter(grepl("No", Fatal) & grepl("Yes", SubjectArmed)) %>%
+  summarize(NumberShootings = n())
+

@@ -60,7 +60,9 @@ ui <- fluidPage(theme = shinytheme("lumen"),
           h2("Race Plot Comparison (Seattle)"),
           plotOutput("distPlot_seattle2"),
           h2("Race Plot Comparison (New York)"),
-          plotOutput("distPlot_nyc2")
+          plotOutput("distPlot_nyc2"),
+          br(),
+          br()
         )
       )
     ),
@@ -110,7 +112,9 @@ ui <- fluidPage(theme = shinytheme("lumen"),
           h2("Armed vs. Unarmed Plot Comparison (Seattle)"), 
           plotOutput("distPlot_seattle1"), 
           h2("Armed vs. Unarmed Plot Comparison (New York City)"), 
-          plotOutput("distPlot_nyc1")
+          plotOutput("distPlot_nyc1"),
+          br(),
+          br()
         )
       )), 
       
@@ -126,7 +130,9 @@ ui <- fluidPage(theme = shinytheme("lumen"),
                                                      "Person-of-Color" = "Black"))
                  ),
                  mainPanel(
-                   leafletOutput("seattle_map")
+                   leafletOutput("seattle_map"),
+                   br(),
+                   br()
                           )
                             )
   )

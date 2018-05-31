@@ -15,7 +15,7 @@ ui <- fluidPage(theme = shinytheme("lumen"),
   titlePanel("Case Studies of Police Shootings Based on Seattle and NYC Data"), 
   tabsetPanel(
     tabPanel(
-      p("With the assistance of social media as a rapid form of communication, there has been increasing attention and awareness on the pervasiveness of many social issues, both nationally and internationally. In recent years in the United States, there has been a national outcry calling attention to the disproportionate amount of African Americans, particularly unarmed black men, that are being shot (and often killed) by police, at rates much higher compared to their white counterparts. African Americans comprise 13% of the national population, yet, according to a recent study done in 2017 by Vox using available FBI data, they comprise 31% of all victims of police violence (Vox, 2017). In addition, racial minorities make up the overwhelming majority of victims fatally shot while unarmed. Although socioeconomic factors may play a role in regards to the higher rates of minorities involved in crime, research still asserts that racial bias is still primarily responsible for such proportions.Our data mainly focuses on crime based in the city of Seattle, located in the largely democratically leaning state of Washington. In addition, Seattle, we have included data from the New York City Police Department, another state that is frequently described as both liberal and democratic. We wanted to explore whether political stance or liberal sentiments had any correlation with regards to police brutality across racial lines. Often this issue is treated as if it is only prevalent in states with larger populations that identify as politically conservative, but we wanted to see how police violence against racial minorities was enacted closer to home, in places that are often considered politically progressive in a national context. According to the 2010 census, African Americans consist of roughly 7.9% of the population in Seattle. In New York City, African Americans make up 24% of the population. These statistics must be taken into account when considering our findings.")
+      p("With the assistance of social media as a rapid form of communication, there has been increasing attention and awareness on the pervasiveness of many social issues, both nationally and internationally. In recent years in the United States, there has been a national outcry calling attention to the disproportionate amount of African Americans, particularly unarmed black men, that are being shot (and often killed) by police, at rates much higher compared to their white counterparts. African Americans comprise 13% of the national population, yet, according to a recent study done in 2017 by Vox using available FBI data, they comprise 31% of all victims of police violence (Vox, 2017). In addition, racial minorities make up the overwhelming majority of victims fatally shot while unarmed. Although socioeconomic factors may play a role in regards to the higher rates of minorities involved in crime, research still asserts that racial bias is still primarily responsible for such proportions.Our data mainly focuses on crime based in the city of Seattle, located in the largely democratically leaning state of Washington. In addition, Seattle, we have included data from the New York City Police Department, another state that is frequently described as both liberal and democratic. We wanted to explore whether political stance or liberal sentiments had any correlation with regards to police brutality across racial lines. Often this issue is treated as if it is only prevalent in states with larger populations that identify as politically conservative, but we wanted to see how police violence against racial minorities was enacted closer to home, in places that are often considered politically progressive in a national context. According to the 2010 census, African Americans consist of roughly 7.9% of the population in Seattle. In New York City, African Americans make up 24% of the population. These statistics must be taken into account when considering our findings. The questions that we wanted to ask included the following.  Is there a correlation between the race of the suspect and whether the officer involved shooting lead to fatalities? Are there more fatalities when the suspect is armed? How does the location impact the fatality in police involved shootings in the different areas in Seattle? Do people of a particular color tend to be involved in officer involved shootings in a particular neighborhood?")
     ),
     tabPanel("Subject Race",
       sidebarLayout(
@@ -62,7 +62,10 @@ ui <- fluidPage(theme = shinytheme("lumen"),
           h2("Race Plot Comparison (New York)"),
           plotOutput("distPlot_nyc2"),
           br(),
-          br()
+          br(), 
+          p("The table showing whether it was fatal or non-fatal correlating to white and non-white victims clearly shows differences. There were clearly a larger amount of non-white victims affected by shootings in both cities. However, because New York City has a bigger population than Seattle, there are big differences shown in New York rather than the minor differences shown in Seattle. Overall, one can see that in both the cities studied, that police use their force more often against minorities or \"non-white\" victims. The results for table highlighting whether the shooting was fatal in the presence of weapons are in line with the intuition that there were a higher number of fatalities when the suspect was armed. We notice the same distinction in numbers as we did when comparing the statistics for the white vs people of color fatality rates between the two cities. New York, having a larger population, shows more crimes in general and in turn has a higher fatality rate in both cases(when the suspect is armed as well as unarmed)")
+          
+          
         )
       )
     ),
@@ -114,29 +117,22 @@ ui <- fluidPage(theme = shinytheme("lumen"),
           h2("Armed vs. Unarmed Plot Comparison (New York City)"), 
           plotOutput("distPlot_nyc1"),
           br(),
-          br()
+          br(), 
+          p("The table showing whether it was fatal or non-fatal correlating to white and non-white victims clearly shows differences. There were clearly a larger amount of non-white victims affected by shootings in both cities. However, because New York City has a bigger population than Seattle, there are big differences shown in New York rather than the minor differences shown in Seattle. Overall, one can see that in both the cities studied, that police use their force more often against minorities or \"non-white\" victims. The results for table highlighting whether the shooting was fatal in the presence of weapons are in line with the intuition that there were a higher number of fatalities when the suspect was armed. We notice the same distinction in numbers as we did when comparing the statistics for the white vs people of color fatality rates between the two cities. New York, having a larger population, shows more crimes in general and in turn has a higher fatality rate in both cases(when the suspect is armed as well as unarmed)")
         )
       )), 
       
       tabPanel("Seattle Shootings Map",
-               sidebarLayout(
-             
-                 sidebarPanel(
-                   checkboxGroupInput("map_fatal", label = h3("Fatal vs. Non-Fatal"), 
-                                      choices = list("Fatal" = "Fatal", 
-                                                     "Non-Fatal" = "Non-Fatal")), 
-                   checkboxGroupInput("map_race", label = h3("White vs. Person of Color"), 
-                                      choices = list("White" = "White", 
-                                                     "Person-of-Color" = "Black"))
-                 ),
+               
                  mainPanel(
                    leafletOutput("seattle_map"),
                    br(),
-                   br()
+                   br(), 
+                   p("Although at first glance there does not seem to be many location-based correlations in regards to Seattle-based shootings by police officers, there is a higher concentration of shootings in downtown Seattle than in the surrounding neighborhoods. While this is likely due to a higher population density in these areas, it could also be a result of other factors. Conclusively, we wanted to collect and analyze data that would support the argument that there are racial disparities in how police use force countrywide. We can see this reflected in our analysis in both the cities of New York and Seattle. The key to solving social issues like this one is awareness, we hope that this will be helpful in the move towards ending this problem.")
                           )
                             )
   )
-))
+)
 
 server <- function(input, output)
 {
@@ -156,7 +152,7 @@ server <- function(input, output)
   data$Longitude <- as.numeric(data$Longitude)
   data$Latitude <- as.numeric(data$Latitude)
   
-  View(data)
+  
   output$seattle_map <- renderLeaflet({
     seattle_map <- leaflet() %>% 
       addTiles() %>%
@@ -248,6 +244,7 @@ server <- function(input, output)
                                       options = list(pageLength = 5, 
                                                      lengthMenu = list(c(5, 10, -1), 
                                                       list('5', '10', 'All'))))
+
   
   # use ggplot in order to supply the plot to be rendered (conditional upon user selection)
   output$distPlot_seattle2 <- renderPlot({

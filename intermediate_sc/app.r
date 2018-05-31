@@ -136,7 +136,7 @@ ui <- fluidPage(theme = shinytheme("lumen"),
 
 server <- function(input, output)
 {
-  data <- read.csv(file = "SPD_Officer_Involved_Shooting__OIS__Data.csv", 
+  data <- read.csv(file = "../data/SPD_Officer_Involved_Shooting__OIS__Data.csv", 
                    stringsAsFactors = FALSE) %>% 
           select(GO, Date, Longitude, Latitude, Officer.Race, Subject.Race, 
                  Subject.Weapon, Fatal) %>% 

@@ -1,0 +1,12 @@
+name: FinalOfficerShootingsApp
+title: FinalOfficerShootingsApp
+username:
+account: olena
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 352036
+bundleId: 1403515
+url: https://olena.shinyapps.io/FinalOfficerShootingsApp/
+when: 1527802096.76219
+asMultiple: FALSE
+asStatic: FALSE

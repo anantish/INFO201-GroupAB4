@@ -1,0 +1,12 @@
+name: final_sc
+title: final_sc
+username:
+account: olena
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 351984
+bundleId: 1403347
+url: https://olena.shinyapps.io/final_sc/
+when: 1527797370.2097
+asMultiple: FALSE
+asStatic: FALSE

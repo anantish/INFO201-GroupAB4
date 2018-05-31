@@ -1,0 +1,12 @@
+name: sourcecode
+title: sourcecode
+username:
+account: olena
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 349085
+bundleId: 1403380
+url: https://olena.shinyapps.io/SourceCode/
+when: 1527798046.84771
+asMultiple: FALSE
+asStatic: FALSE

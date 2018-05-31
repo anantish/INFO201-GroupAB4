@@ -103,13 +103,13 @@ ui <- fluidPage(theme = shinytheme("lumen"),
     
         # Main panel for displaying outputs ----
         mainPanel(
-          h2("Armed vs. Unarmed Comparision (Seattle)"), 
+          h2("Armed vs. Unarmed Comparison (Seattle)"), 
           dataTableOutput("table_seattle1"),
-          h2("Armed vs. Unarmed Comparision (New York City)"), 
+          h2("Armed vs. Unarmed Comparison (New York City)"), 
           dataTableOutput("table_nyc1"), 
-          h2("Armed vs. Unarmed Plot Comparision (Seattle)"), 
+          h2("Armed vs. Unarmed Plot Comparison (Seattle)"), 
           plotOutput("distPlot_seattle1"), 
-          h2("Armed vs. Unarmed Plot Comparision (Seattle)"), 
+          h2("Armed vs. Unarmed Plot Comparison (New York City)"), 
           plotOutput("distPlot_nyc1")
         )
       )), 

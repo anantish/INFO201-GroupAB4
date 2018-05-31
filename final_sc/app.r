@@ -122,10 +122,10 @@ ui <- fluidPage(theme = shinytheme("lumen"),
                sidebarLayout(
              
                  sidebarPanel(
-                   checkboxGroupInput("map_fatal", label = h3("Select"), 
+                   checkboxGroupInput("map_fatal", label = h3("Fatal vs. Non-Fatal"), 
                                       choices = list("Fatal" = "Fatal", 
                                                      "Non-Fatal" = "Non-Fatal")), 
-                   checkboxGroupInput("map_race", label = h3("Select"), 
+                   checkboxGroupInput("map_race", label = h3("White vs. Person of Color"), 
                                       choices = list("White" = "White", 
                                                      "Person-of-Color" = "Black"))
                  ),
@@ -156,13 +156,16 @@ server <- function(input, output)
   data$Longitude <- as.numeric(data$Longitude)
   data$Latitude <- as.numeric(data$Latitude)
   
-  
+  View(data)
   output$seattle_map <- renderLeaflet({
     seattle_map <- leaflet() %>% 
       addTiles() %>%
       addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
-                 popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
-                                "<br>", "Date: ",  Date, sep = " "),
+                 popup = ~paste("<h3>Details</h3>", strong("Fatal: "), Fatal, 
+                                "<br>", strong("Date: "),  Date,"<br>", 
+                                strong("Officer Race: "), 
+                                OfficerRace, "<br>", strong("Subject Race:"), 
+                                SubjectRace, sep = " "),
                  clusterOptions = markerClusterOptions()) %>% 
       setView(lng = -122.335167, lat = 47.608013, zoom = 11,
               options = NULL)

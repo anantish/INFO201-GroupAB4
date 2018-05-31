@@ -7,12 +7,11 @@ library(leaflet)
 library(ggmap)
 library(sp)
 library(geojsonio)
-
 library(shinythemes)
 source("basecode.R")
 
 ui <- fluidPage(theme = shinytheme("lumen"),
-  leafletOutput("seattle_map"), 
+  #leafletOutput("seattle_map"), 
 
   titlePanel("Case Studies of Police Shootings based on Seattle and NYC Data"), 
   tabsetPanel(
@@ -95,19 +94,44 @@ ui <- fluidPage(theme = shinytheme("lumen"),
           plotOutput("distPlot_seattle1"), 
           plotOutput("distPlot_nyc1")
         )
-      )
-    )
+      )), 
+      
+      tabPanel("Seattle Shootings Map",
+               sidebarLayout(
+             
+                 sidebarPanel(
+                   checkboxGroupInput("map_fatal", label = h3("Select"), 
+                                      choices = list("Fatal" = "Fatal", 
+                                                     "Non-Fatal" = "Non-Fatal")), 
+                   checkboxGroupInput("map_race", label = h3("Select"), 
+                                      choices = list("White" = "White", 
+                                                     "Person-of-Color" = "Black"))
+                 ),
+                 mainPanel(
+                   leafletOutput("seattle_map")
+                          )
+                            )
   )
-)
+))
 
 server <- function(input, output)
 {
-  data <- read.csv(file = "SPD_Officer_Involved_Shooting__OIS__Data.csv",
-                   stringsAsFactors = FALSE)
+  data <- read.csv(file = "../data/SPD_Officer_Involved_Shooting__OIS__Data.csv", 
+                   stringsAsFactors = FALSE) %>% 
+          select(GO, Date, Longitude, Latitude, Officer.Race, Subject.Race, 
+                 Subject.Weapon, Fatal) %>% 
+          group_by(GO) %>%
+          summarise(Date = paste(unique(Date), collapse = " , "),
+              Longitude = paste(unique(Longitude), collapse = " , "),
+              Latitude = paste(unique(Latitude), collapse = " , "),
+              OfficerRace = paste(Officer.Race, collapse = " , "),
+              SubjectRace = paste(unique(Subject.Race), collapse =" , "),
+              SubjectArmed = paste(unique(Subject.Weapon), collapse =" , "),
+              Fatal = paste(unique(Fatal), collapse =" , "))
+  
   data$Longitude <- as.numeric(data$Longitude)
   data$Latitude <- as.numeric(data$Latitude)
   
-  data_sp <- SpatialPointsDataFrame(data[,c(6, 7)], data[,-c(6, 7)])
   
   output$seattle_map <- renderLeaflet({
     seattle_map <- leaflet() %>% addTiles() %>%
@@ -117,7 +141,25 @@ server <- function(input, output)
                                clusterOptions = markerClusterOptions()) %>%
                               setView(lng = -122.335167, lat = 47.608013, zoom = 11, options = NULL)
     
-})
+                                      })
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+  
+  
+  
+  
+  
+  
   
   # chose the 2 dataframes of interest that will be used based on user selection
   # the first data frame will be for Seattle and the second for NYC

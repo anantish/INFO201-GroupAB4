@@ -8,14 +8,15 @@ library(ggmap)
 library(sp)
 library(geojsonio)
 
+library(shinythemes)
 source("basecode.R")
 
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("lumen"),
   leafletOutput("seattle_map"), 
 
-  titlePanel("Police Shooting Data Comparison (SEA & NYC)"), 
+  titlePanel("Case Studies of Police Shootings based on Seattle and NYC Data"), 
   tabsetPanel(
-    tabPanel("White/Non-White",
+    tabPanel("Subject Race",
       sidebarLayout(
     
         # Sidebar panel for inputs ----
@@ -24,17 +25,17 @@ ui <- fluidPage(
           h3("Please choose the combination of control parameters below:"),
       
           # Input: Provide the first metric of interest ----
-          radioButtons("studied_type2", label = h3("Fatal or Non-Fatal Shooting"),
-                       c("Fatal Shooting" = "fatal2",
-                         "Non-Fatal Shooting" = "non-fatal2")),
+          radioButtons("studied_type2", label = h3("Fatality of Shooting"),
+                       c("Fatal" = "fatal2",
+                         "Non-Fatal" = "non-fatal2")),
       
           # br() element to introduce extra vertical spacing ----
           br(),
       
           # Input: Provide the second metric of interest ----
-          radioButtons("studied_race2", label = h3("White or Non-White Shooting Target"),
-                       c("White Target" = "white2",
-                         "Non-White Target" = "non-white2")),
+          radioButtons("studied_race2", label = h3("Race of Subject"), 
+                       c("White" = "white2",
+                         "Non-White" = "non-white2")),
       
           # br() element to introduce extra vertical spacing ----
           br(),
@@ -44,7 +45,7 @@ ui <- fluidPage(
                              choices = list("2005" = "2005", "2006" = "2006", "2007" = "2007", "2008" = "2008",
                                             "2009" = "2009", "2010" = "2010", "2011" = "2011", "2012" = "2012",
                                             "2013" = "2013", "2014" = "2014", "2015" = "2015", "2016" = "2016"),
-                             selected = list("2005", "2007", "2010", "2011", "2013", "2014", "2015"))
+                             selected = list("2005", "2006", "2007", "2008", "2009", "2010", "2011"))
         ),
         mainPanel(
           dataTableOutput("table_seattle2"),
@@ -55,7 +56,7 @@ ui <- fluidPage(
       )
     ),
 
-    tabPanel("Armed/Unarmed",
+    tabPanel("Presence of Weapon",
       sidebarLayout(
     
         # Sidebar panel for inputs ----
@@ -64,17 +65,17 @@ ui <- fluidPage(
           h3("Please choose the combination of control parameters below:"),
       
           # Input: Provide the first metric of interest ----
-          radioButtons("studied_type1", label = h3("Fatal or Non-Fatal Shooting"),
-                       c("Fatal Shooting" = "fatal1",
-                         "Non-Fatal Shooting" = "non-fatal1")),
+          radioButtons("studied_type1", label = h3("Fatality of Shooting"), 
+                       c("Fatal" = "fatal1",
+                         "Non-Fatal" = "non-fatal1")),
       
           # br() element to introduce extra vertical spacing ----
           br(),
       
           # Input: Provide the second metric of interest ----
-          radioButtons("studied_armed1", label = h3("Armed or Unarmed Shooting Target"),
-                       c("Armed Target" = "armed1",
-                         "Unarmed Target" = "unarmed1")),
+          radioButtons("studied_armed1", label = h3("Presence of Weapon by Subject"),
+                       c("Armed Subject" = "armed1",
+                         "Unarmed Subject" = "unarmed1")),
       
           # br() element to introduce extra vertical spacing ----
           br(),
@@ -187,8 +188,8 @@ server <- function(input, output)
   output$distPlot_seattle2 <- renderPlot({
     
     p <- ggplot(chosen_metric_seattle2(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
-      labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
-           y = "Number Shootings", # y-axis label (with units!)
+      labs(x = "Year", # x-axis label (with units!)
+           y = "Number of Shootings", # y-axis label (with units!)
            color = "Date") + # legend label for the "color" property
       theme (
         panel.background = element_blank(), # remove gray background
@@ -204,8 +205,8 @@ server <- function(input, output)
   output$distPlot_nyc2 <- renderPlot({
     
     p <- ggplot(chosen_metric_nyc2(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
-      labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
-           y = "Number Shootings", # y-axis label (with units!)
+      labs(x = "Year", # x-axis label (with units!)
+           y = "Number of Shootings", # y-axis label (with units!)
            color = "Date") + # legend label for the "color" property
       theme (
         panel.background = element_blank(), # remove gray background
@@ -286,8 +287,8 @@ server <- function(input, output)
   output$distPlot_seattle1 <- renderPlot({
     
     p <- ggplot(chosen_metric_seattle1(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
-      labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
-           y = "Number Shootings", # y-axis label (with units!)
+      labs(x = "Year", # x-axis label (with units!)
+           y = "Number of Shootings", # y-axis label (with units!)
            color = "Date") + # legend label for the "color" property
       theme (
         panel.background = element_blank(), # remove gray background
@@ -303,8 +304,8 @@ server <- function(input, output)
   output$distPlot_nyc1 <- renderPlot({
     
     p <- ggplot(chosen_metric_nyc1(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
-      labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
-           y = "Number Shootings", # y-axis label (with units!)
+      labs(x = "Year", # x-axis label (with units!)
+           y = "Number of Shootings", # y-axis label (with units!)
            color = "Date") + # legend label for the "color" property
       theme (
         panel.background = element_blank(), # remove gray background

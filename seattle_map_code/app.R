@@ -10,7 +10,20 @@ library(sp)
 library(geojsonio)
 
 ui <- fluidPage(
-  leafletOutput("seattle_map")
+  tabsetPanel(
+  tabPanel("Seattle Shootings Map",
+           sidebarLayout(
+             
+             sidebarPanel(
+               checkboxGroupInput("map_fatal", label = h3("Select"), 
+                                  choices = list("Fatal" = "Fatal", 
+                                                 "Non-Fatal" = "Non-Fatal")), 
+               checkboxGroupInput("map_race", label = h3("Select"), 
+                                  choices = list("White" = "White", 
+                                                 "Person-of-Color" = "Black"))
+             ),
+             mainPanel(
+               leafletOutput("seattle_map")))))
 )
 
 server <- function(input, output)
@@ -34,9 +47,6 @@ data$Longitude <- as.numeric(data$Longitude)
 data$Latitude <- as.numeric(data$Latitude)
             
 
-#data_sp <- SpatialPointsDataFrame(data[,c(6, 7)], 
-                                  #data[,-c(6, 7)])
-
 output$seattle_map <- renderLeaflet({
  
            
@@ -54,6 +64,8 @@ output$seattle_map <- renderLeaflet({
                        options = NULL)
 
 })
+
+output$filter_race <- 
 
 }
   

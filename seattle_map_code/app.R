@@ -1,3 +1,4 @@
+
 library(shiny)
 library(dplyr)
 library(ggplot2)
@@ -14,7 +15,6 @@ ui <- fluidPage(
 
 server <- function(input, output)
 {
-  
 data <- read.csv(file = "../data/SPD_Officer_Involved_Shooting__OIS__Data.csv", 
                  stringsAsFactors = FALSE)
 data$Longitude <- as.numeric(data$Longitude)
@@ -24,11 +24,11 @@ data_sp <- SpatialPointsDataFrame(data[,c(6, 7)],
                                   data[,-c(6, 7)])
 
 output$seattle_map <- renderLeaflet({
-
+ 
                seattle_map<- leaflet() %>% 
                addTiles() %>% 
           
-               addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
+               addAwesomeMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
                           popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
                                          "<br>", "Date: ",  Date, sep = " "),
                           clusterOptions = markerClusterOptions()) %>% 
@@ -38,6 +38,7 @@ output$seattle_map <- renderLeaflet({
 })
 
 }
+  
 
 shinyApp(ui, server)
 

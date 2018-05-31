@@ -11,6 +11,16 @@ source("basecode.R")
 
 ui <- fluidPage(
   leafletOutput("seattle_map"), 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   titlePanel("Police Shooting Data Comparison (SEA & NYC)"), 
  tabsetPanel(
    tabPanel("trash",
@@ -22,7 +32,7 @@ ui <- fluidPage(
       h3("Please choose the combination of control parameters below:"),
       
       # Input: Provide the first metric of interest ----
-      radioButtons("studied_type", label = h3("Fatal or Non-Fatal Shooting"),
+      radioButtons("studied_type2", label = h3("Fatal or Non-Fatal Shooting"),
                    c("Fatal Shooting" = "fatal",
                      "Non-Fatal Shooting" = "non-fatal")),
       
@@ -30,7 +40,7 @@ ui <- fluidPage(
       br(),
       
       # Input: Provide the second metric of interest ----
-      radioButtons("studied_race", label = h3("White or Non-White Shooting Target"),
+      radioButtons("studied_race2", label = h3("White or Non-White Shooting Target"),
                    c("White Target" = "white",
                      "Non-White Target" = "non-white")),
       
@@ -38,18 +48,30 @@ ui <- fluidPage(
       br(),
       
       # Input: check box group for the years to be selected ----
-      checkboxGroupInput("yearCheckGroup", label = h3("Selected Years"), 
+      checkboxGroupInput("yearCheckGroup2", label = h3("Selected Years"), 
                          choices = list("2005" = "2005", "2006" = "2006", "2007" = "2007", "2008" = "2008",
                                         "2009" = "2009", "2010" = "2010", "2011" = "2011", "2012" = "2012",
                                         "2013" = "2013", "2014" = "2014", "2015" = "2015", "2016" = "2016"),
                          selected = list("2005", "2007", "2010", "2011", "2013", "2014", "2015"))
     ),
   mainPanel(
-    dataTableOutput("table_seattle"), 
-    dataTableOutput("table_nyc"), 
-    plotOutput("distPlot_seattle"), 
-    plotOutput("distPlot_nyc")
+    dataTableOutput("table_seattle2"), 
+    dataTableOutput("table_nyc2"), 
+    plotOutput("distPlot_seattle2"), 
+    plotOutput("distPlot_nyc2")
     ))),
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   tabPanel("other", 
   sidebarLayout(
     
@@ -120,73 +142,87 @@ server <- function(input, output)
     
   })
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   # chose the 2 dataframes of interest that will be used based on user selection
   # the first data frame will be for Seattle and the second for NYC
   chosen_metric_seattle <- reactive({
-    if ((input$studied_type == "fatal") & (input$studied_race == "white")) {
+    if ((input$studied_type2 == "fatal") & (input$studied_race2 == "white")) {
       
       # combination of fatal shooting & white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_seattle <- seattle_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_seattle <- seattle_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "fatal") & (input$studied_race == "non-white")) {
+    } else if ((input$studied_type2 == "fatal") & (input$studied_race2 == "non-white")) {
       
       # combination of fatal shooting & non-white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_seattle <- seattle_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_seattle <- seattle_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "non-fatal") & (input$studied_race == "white")) {
+    } else if ((input$studied_type2 == "non-fatal") & (input$studied_race2 == "white")) {
       
       # combination of non-fatal shooting & white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_seattle <- seattle_non_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_seattle <- seattle_non_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "non-fatal") & (input$studied_race == "non-white")) {
+    } else if ((input$studied_type2 == "non-fatal") & (input$studied_race2 == "non-white")) {
       
       # combination of non-fatal shooting & non-white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_seattle <- seattle_non_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_seattle <- seattle_non_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
     }
   })
   
   chosen_metric_nyc <- reactive({
-    if ((input$studied_type == "fatal") & (input$studied_race == "white")) {
+    if ((input$studied_type2 == "fatal") & (input$studied_race2 == "white")) {
       
       # combination of fatal shooting & white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_nyc <- new_york_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_nyc <- new_york_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "fatal") & (input$studied_race == "non-white")) {
+    } else if ((input$studied_type2 == "fatal") & (input$studied_race2 == "non-white")) {
       
       # combination of fatal shooting & non-white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_nyc <- new_york_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_nyc <- new_york_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "non-fatal") & (input$studied_race == "white")) {
+    } else if ((input$studied_type2 == "non-fatal") & (input$studied_race2 == "white")) {
       
       # combination of non-fatal shooting & white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_nyc <- new_york_non_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_nyc <- new_york_non_fatal_by_year_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
-    } else if ((input$studied_type == "non-fatal") & (input$studied_race == "non-white")) {
+    } else if ((input$studied_type2 == "non-fatal") & (input$studied_race2 == "non-white")) {
       
       # combination of non-fatal shooting & non-white target which is then
       # filtered by the selected years
-      filtered_chosen_dataframe_nyc <- new_york_non_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup, collapse="|"), Date))
+      filtered_chosen_dataframe_nyc <- new_york_non_fatal_by_year_non_White %>% filter(grepl(paste(input$yearCheckGroup2, collapse="|"), Date))
       
     }
   })
   
   # table will contain the data table to be rendered - assign it here
-  output$table_seattle <- renderDataTable({chosen_metric_seattle()},
+  output$table_seattle2 <- renderDataTable({chosen_metric_seattle()},
                                           options = list(pageLength = 5, lengthMenu = list(c(5, 10, -1), list('5', '10', 'All'))))
   
-  output$table_nyc <- renderDataTable({chosen_metric_nyc()},
+  output$table_nyc2 <- renderDataTable({chosen_metric_nyc()},
                                       options = list(pageLength = 5, lengthMenu = list(c(5, 10, -1), list('5', '10', 'All'))))
   
   # use ggplot in order to supply the plot to be rendered (conditional upon user selection)
-  output$distPlot_seattle <- renderPlot({
+  output$distPlot_seattle2 <- renderPlot({
     
     p <- ggplot(chosen_metric_seattle(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
       labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
@@ -203,7 +239,7 @@ server <- function(input, output)
   })
   
   # use ggplot in order to supply the plot to be rendered (conditional upon user selection)
-  output$distPlot_nyc <- renderPlot({
+  output$distPlot_nyc2 <- renderPlot({
     
     p <- ggplot(chosen_metric_nyc(), aes(y = NumberShootings, x = Date, fill = Date)) + geom_col(position = "dodge") +
       labs(x = "Year(s) Of Measurement", # x-axis label (with units!)
@@ -218,6 +254,12 @@ server <- function(input, output)
     
     p
   })
+  
+  
+  
+  
+  
+  
   
   
   

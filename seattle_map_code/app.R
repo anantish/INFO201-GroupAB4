@@ -29,7 +29,8 @@ output$seattle_map <- renderLeaflet({
                addTiles() %>%
                addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
                           popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
-                                         "<br>", "Date: ",  Date, sep = " "),
+                                         "<br>", "Date: ",  Date, sep = " ", 
+                          color = ~pal(type)),
                           clusterOptions = markerClusterOptions()) %>%
                setView(lng = -122.335167, lat = 47.608013, zoom = 11,
                        options = NULL)

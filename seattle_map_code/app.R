@@ -24,14 +24,13 @@ data_sp <- SpatialPointsDataFrame(data[,c(6, 7)],
                                   data[,-c(6, 7)])
 
 output$seattle_map <- renderLeaflet({
-
+  
                seattle_map<- leaflet() %>% 
-               addTiles() %>% 
-          
+               addTiles() %>%
                addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
                           popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
                                          "<br>", "Date: ",  Date, sep = " "),
-                          clusterOptions = markerClusterOptions()) %>% 
+                          clusterOptions = markerClusterOptions()) %>%
                setView(lng = -122.335167, lat = 47.608013, zoom = 11,
                        options = NULL)
 

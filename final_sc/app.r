@@ -134,32 +134,16 @@ server <- function(input, output)
   
   
   output$seattle_map <- renderLeaflet({
-    seattle_map <- leaflet() %>% addTiles() %>%
-                    addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
-                               popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal,
-                                              "<br>", "Date: ",  Date, sep = " "),
-                               clusterOptions = markerClusterOptions()) %>%
-                              setView(lng = -122.335167, lat = 47.608013, zoom = 11, options = NULL)
-    
-                                      })
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  
-  
-  
-  
-  
-  
-  
+    seattle_map <- leaflet() %>% 
+      addTiles() %>%
+      addMarkers(data = data, lng = ~Longitude, lat = ~Latitude, 
+                 popup = ~paste("<h3>Details</h3>", "Fatal: ", Fatal, 
+                                "<br>", "Date: ",  Date, sep = " "),
+                 clusterOptions = markerClusterOptions()) %>% 
+      setView(lng = -122.335167, lat = 47.608013, zoom = 11,
+              options = NULL)
+})
+
   
   # chose the 2 dataframes of interest that will be used based on user selection
   # the first data frame will be for Seattle and the second for NYC
